@@ -5,38 +5,31 @@ import java.nio.file.attribute.UserDefinedFileAttributeView
  */
 class PhoneBook(val owner: User) {
 
+  require(owner != null, "requirement failed: Phonebook owner cannot be null")
+
   var contacts = List[User]()
 
-  if (owner == null){
+    def addContact (user:User): Unit = {
 
-    throw new IllegalArgumentException("requirement failed: Phonebook owner cannot be null");
-  }
-
-  def addContact (user:User): Unit = {
-
-    if (contacts.contains(user)){
-      throw new IllegalArgumentException("requirement failed: Cannot add repeated contacts");
-    } else if (user == null){
+    if (user == null){
       throw new IllegalArgumentException("requirement failed: Contact cannot be null");
+    } else if (contacts.contains(user)){
+      throw new IllegalArgumentException("requirement failed: Cannot add repeated contacts");
     } else {
       contacts = user :: contacts
     }
   }
 
   def addPhoneNumber(name:String, phone:Int): Unit = {
-
     contacts.find(_.name == name) match {
       case Some(user) => user.addPhone(phone)
-      case None => throw new IllegalArgumentException("There is no user named " + name);
+      case None => throw new IllegalArgumentException(s"There is no user named $name");
     }
   }
 
 
   def findContact (name:String): List[User] = {
-
-    if (name == null){
-      throw new IllegalArgumentException("requirement failed: Cannot search for a null user");
-    }
+    require(name != null, "requirement failed: Cannot search for a null user")
 
     contacts.filter(_.name.toLowerCase().contains(name.toLowerCase())).sortBy(_.name)
   }
