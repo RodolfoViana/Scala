@@ -176,6 +176,4 @@ class PhoneBookTest extends FlatSpec with Matchers {
     } should have message "requirement failed: Cannot search for a null user"
   }
 
-
-
 }
