@@ -61,6 +61,7 @@ class PhoneBookTest extends FlatSpec with Matchers {
     book.contacts.isEmpty should be equals true
 
     val tales = new User("tales")
+
     book addContact tales
     book.contacts.size should be equals 1
     book.contacts.head should be equals tales
@@ -72,6 +73,7 @@ class PhoneBookTest extends FlatSpec with Matchers {
     book.contacts.size should be equals 1
     book.contacts.head should be equals tales
   }
+
 
   it should "add phone number to contact" in {
     val book = new PhoneBoook(owner = new User(name = "igleson"))
@@ -85,6 +87,7 @@ class PhoneBookTest extends FlatSpec with Matchers {
 
     tales.phones contains talesNumber should be equals true
   }
+
 
   it should "not add repeated phone number to contact" in {
     val book = new PhoneBoook(owner = new User(name = "igleson"))
@@ -117,53 +120,4 @@ class PhoneBookTest extends FlatSpec with Matchers {
     } should have message "There is no user named andryw"
   }
 
-  it should "search for contacts" in {
-    val book = new PhoneBoook(owner = new User(name = "igleson"))
-
-    val tales = new User("tales")
-    val talesNumber = 12345678
-
-    val talesBoy = new User("tales boy")
-    val talesBoyNumber = 32165487
-
-    val andryw = new User("andryw")
-    val andrywNumber = 65432187
-
-    val anderson = new User("anderson")
-    val andersonNumber = 87654321
-
-
-    book addContact tales
-    book addPhoneNumber("tales", talesNumber)
-
-    book addContact talesBoy
-    book addPhoneNumber("tales boy", talesBoyNumber)
-
-    book addContact andryw
-    book addPhoneNumber("andryw", andrywNumber)
-
-    book addContact anderson
-    book addPhoneNumber("anderson", andersonNumber)
-
-
-    (book findContact "tal") should be equals List(tales, talesBoy)
-
-    (book findContact "tales") should be equals List(tales, talesBoy)
-
-    (book findContact "talesb") should be equals List(talesBoy)
-
-    (book findContact "talesB") should be equals List(talesBoy)
-
-    (book findContact "a") should be equals List(anderson, andryw)
-
-    (book findContact "") should be equals List(anderson, andryw, tales, talesBoy)
-  }
-
-  it should "not search for null user" in {
-    val book = new PhoneBoook(owner = new User(name = "igleson"))
-
-    the[IllegalArgumentException] thrownBy {
-      book findContact null
-    } should have message "requirement failed: Cannot search for a null user"
-  }
 }
