@@ -59,11 +59,25 @@ class HighOrder {
   }
 
   //High Order functions HashMap
-  /*var myHash = HashMap[String, Int]()
+  var myHash = HashMap[String, Int]()
 
   def addHash(key : String, value: Int): HashMap[String, Int] = {
-    myHash.++:()
-    myHash.++()
-  }*/
+    myHash += key -> value
+    myHash
+  }
+
+  def removeHash(key : String): HashMap[String, Int] = {
+    myHash -= key
+    myHash
+  }
+
+
+  def getValue(key : String): Int = {
+    myHash.get(key) match {
+      case Some(i) => i
+      case None => throw new IllegalArgumentException(s"Key not found")
+    }
+  }
+
 
 }

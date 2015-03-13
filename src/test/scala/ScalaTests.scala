@@ -1,7 +1,12 @@
 /**
  * Created by viana on 12/03/15.
  */
+
+import java.util
+
 import org.scalatest._
+
+import scala.collection.immutable.HashMap
 
 class ScalaTests extends FlatSpec with Matchers {
   "high order functions" should "merge two lists" in {
@@ -64,10 +69,73 @@ class ScalaTests extends FlatSpec with Matchers {
     myList should have size 4
     myList should contain inOrderOnly(23, 10, 12, 18)
 
-    //Replace item
+    // Replace item
     myList = hO replaceItem (10, 2)
     myList should have size 4
     myList should contain inOrderOnly(23, 2, 12, 18)
+
+    var myHash = HashMap[String, Int]()
+
+    // Add key/value
+    myHash should have size 0
+    myHash = hO addHash ("Rodolfo",10)
+    myHash should have size 1
+    myHash should contain ("Rodolfo" -> 10)
+
+    myHash = hO addHash ("Pedro",20)
+    myHash should have size 2
+    myHash should contain ("Pedro" -> 20)
+    myHash should contain ("Rodolfo" -> 10)
+
+    // Remove key/value
+    myHash = hO removeHash ("Pedro")
+    myHash should have size 1
+    myHash should not contain ("Pedro" -> 20)
+
+    myHash = hO removeHash ("Rodolfo")
+    myHash should have size 0
+
+    // Return the value from one key
+    myHash = hO addHash ("Pedro",20)
+    myHash = hO addHash ("Rodolfo",10)
+    val value = hO getValue ("Rodolfo")
+    value shouldBe 10
+
+    // Tuple
+    var t = ("Rodolfo", 10, 10+20)
+    println (t)
+
+    // Print second value
+    println (t._2)
+
+    // Replace first element
+    t = ("Casa", t._2, t._3)
+    println (t)
+
+
+    //Range 100 ints
+    val range = new Range(1,101,1)
+    range should have size 100
+    println(range)
+
+    // Map
+    var fc = new FunctionalCombination()
+    var list2 = fc.modify(myList, (a: Int) => a * a)
+    println (list2)
+
+    // Filter _
+    var list3: List[Int] = 1 to 10 toList
+
+    list3 = fc.filter(list3)
+    println (list3)
+
+    // Filter function
+    var list4: List[Int] = 1 to 10 toList
+
+    list4 = fc.filter(list4, (a:Int) => a % 2 == 0)
+    println (list4)
+
+    //
 
   }
 }
