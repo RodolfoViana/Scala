@@ -71,6 +71,8 @@ class PhoneBookTest extends FlatSpec with Matchers {
 
     book.contacts should have size 1
     book.contacts should contain(tales)
+
+    //book.addName("Rodolfo")
   }
 
   it should "add phone number to contact" in {
@@ -175,5 +177,7 @@ class PhoneBookTest extends FlatSpec with Matchers {
       book findContact null
     } should have message "requirement failed: Cannot search for a null user"
   }
+
+
 
 }

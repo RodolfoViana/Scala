@@ -9,14 +9,14 @@ class PhoneBook(val owner: User) {
 
   var contacts = List[User]()
 
-    def addContact (user:User): Unit = {
-      require(user != null, "Contact cannot be null")
+  def addContact (user:User): Unit = {
+    require(user != null, "Contact cannot be null")
 
-      if (contacts.contains(user)){
-        throw new IllegalArgumentException("requirement failed: Cannot add repeated contacts");
-      } else {
-        contacts = user :: contacts
-      }
+    if (contacts.contains(user)){
+      throw new IllegalArgumentException("requirement failed: Cannot add repeated contacts");
+    } else {
+      contacts = user :: contacts
+    }
   }
 
   def addPhoneNumber(name:String, phone:Int): Unit = {
@@ -26,12 +26,16 @@ class PhoneBook(val owner: User) {
     }
   }
 
+  def addName(user: User): Unit = {
+    addContact(user)
+  }
 
   def findContact (name:String): List[User] = {
     require(name != null, "Cannot search for a null user")
 
     contacts.filter(_.name.toLowerCase().contains(name.toLowerCase())).sortBy(_.name)
   }
+
 }
 
 

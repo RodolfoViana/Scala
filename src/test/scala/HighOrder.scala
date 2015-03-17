@@ -4,15 +4,16 @@ import scala.collection.immutable.HashMap
  * Created by viana on 13/03/15.
  */
 class HighOrder {
-  def merge[A](ints: List[A], ints1: List[A], function: (A, A) => A): List[A] = {
+  def merge[A](ints: List[A], ints1: List[A])(implicit soma:(A, A) => A): List[A] = {
     require(ints.size == ints1.size, "Lists must have the same size")
     require(!ints.isEmpty | !ints.isEmpty, "Lists are empty")
 
     var resp_list : List[A] = List[A]()
 
-    resp_list = loop(ints, ints1, function, resp_list).reverse
+    resp_list = loop(ints, ints1, soma, resp_list).reverse
     resp_list
   }
+
 
   def loop[A](ints: List[A], ints1: List[A], function: (A, A) => A, resp_list : List[A]): List[A] = {
     var aux_List: List[A] = resp_list
